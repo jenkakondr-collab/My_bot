@@ -44,13 +44,13 @@ else:
 
     response = requests.post(API_URL, headers=headers, json=payload, proxies=no_proxies)
 
-if response.status_code == 200:
-    return response.content  # Возвращаем байты картинки
-else:
-    print(f"Ошибка Hugging Face: {response.status_code}")
-    print(f"Ответ сервера: {response.text}")
+    if response.status_code == 200:
+        return response.content  # Возвращаем байты картинки
+    else:
+        print(f"Ошибка Hugging Face: {response.status_code}")
+        print(f"Ответ сервера: {response.text}")
+        return None
 
-return None
 
 
 
