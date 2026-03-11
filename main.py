@@ -44,11 +44,12 @@ def upload_photo_to_vk(image_bytes, user_id):
 def generate_image(prompt, image_url=None):
     headers = {"Authorization": f"Bearer {HF_TOKEN}"}
     img_data = None
-  
+    encoded_image = None
 
     if image_url:
         download_res = requests.get(image_url)
         if download_res.status_code == 200:
+            encoded_image = base64.b64encode(download_res.content).decode("utf-8")
             img_data = download_res.content
             headers["X-Prompt"] = prompt.encode("utf-8")
             response = requests.post(API_URL, headers=headers, data=img_data)   
