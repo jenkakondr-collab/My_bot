@@ -62,7 +62,7 @@ def generate_image(prompt, image_url=None):
             "inputs": prompt,
             "image": encoded_image,
             "parameters": {
-                "strength": 0.5  # 0.1 — почти не меняет фото, 0.9 — меняет очень сильно
+                "strength": 0.7  # 0.1 — почти не меняет фото, 0.9 — меняет очень сильно
                 }
             }
         
