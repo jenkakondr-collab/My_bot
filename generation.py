@@ -17,17 +17,22 @@ def generate_image(prompt_ru, image_bytes, hf_token):
     "Authorization": f"Bearer {os.environ['HF_TOKEN']}",
 }
 
-    if image_bytes is not None:
-        base64_image = base64.b64encode(image_bytes).decode('utf-8')
-        payload = {
-            "inputs": english_prompt,
-            "parameters": {
-                "image": base64_image
+if image_bytes is not None:
+    # 1. Кодируем картинку в base64
+    base64_image = base64.b64encode(image_bytes).decode('utf-8')
+    # 2. Формируем Data URL, который требует модель Qwen
+    image_data_url = f"data:image/jpeg;base64,{base64_image}"
+        
+        # 3. Собираем payload по правилам Qwen
+    payload = {
+        "inputs": {
+            "image": image_data_url,
+            "prompt": english_prompt
             }
         }
-    else:
-        payload = {
-            "inputs": english_prompt
+else:
+    payload = {
+        "inputs": english_prompt
         }
        
 
@@ -46,3 +51,4 @@ def generate_image(prompt_ru, image_bytes, hf_token):
         print(f"Ответ сервера: {response.text}")
 
         return None
+
