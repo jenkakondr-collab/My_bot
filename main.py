@@ -66,11 +66,12 @@ def generate_image(prompt, image_url=None):
     else:
         payload = {"inputs": prompt}    
 
-    response = requests.post(API_URL, headers=headers, json=payload)
+    response = requests.post(API_URL, headers=headers, data=img_data)
     if response.status_code == 200:
         return response.content
     else:
         print(f"Ошибка API: {response.status_code}")
+        response = requests.post(API_URL, headers=headers, json=payload)
         return None
     
 
