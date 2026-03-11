@@ -61,17 +61,23 @@ def generate_image(prompt, image_url=None):
         payload = {
             "inputs": prompt,
             "image": encoded_image
+            "parameters": {
+                "strength": 0.5  # 0.1 — почти не меняет фото, 0.9 — меняет очень сильно
+                }
             }
         
     else:
-        payload = {"inputs": prompt}    
+        payload = {"inputs": prompt}   
 
-    response = requests.post(API_URL, headers=headers, data=img_data)
+    if img_data:
+        headers["X-Prompt"] = prompt.encode("utf-8") 
+
+    response = requests.post(API_URL, headers=headers, json=payload)
     if response.status_code == 200:
         return response.content
     else:
         print(f"Ошибка API: {response.status_code}")
-        response = requests.post(API_URL, headers=headers, json=payload)
+        if "X-Prompt" in headers: del headers["X-Prompt"]
         return None
     
 
