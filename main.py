@@ -5,6 +5,8 @@ from vk_api.longpoll import VkLongPoll, VkEventType
 from vk_api.utils import get_random_id
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 from vk_api.upload import VkUpload
+from flask import Flask
+import threading
 import io
 import requests
 import base64
@@ -77,6 +79,21 @@ print("Бот запущен и слушает сообщения...")
 
 user_states = {}
 user_photos = {}
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "I'm alive"
+
+def run():
+    app.run(host='0.0.0.0', port=10000)
+
+def keep_alive():
+    t = threading.Thread(target=run)
+    t.start()
+
+# Вызываем это перед запуском основного цикла бота
+keep_alive()
 for event in longpoll.listen():
     if event.type == VkEventType.MESSAGE_NEW and event.to_me:
         print(f"Пришло сообщение: '{event.text}'") # Кавычки помогут увидеть лишние пробелы

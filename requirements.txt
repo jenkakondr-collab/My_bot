@@ -1,3 +1,4 @@
 vk_api
 requests
 deep-translator
+flask
