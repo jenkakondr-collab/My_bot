@@ -53,8 +53,8 @@ def generate_image(prompt, image_url=None):
         if download_res.status_code == 200:
             encoded_image = base64.b64encode(download_res.content).decode("utf-8")
             img_data = download_res.content
-            headers["X-Prompt"] = prompt.encode("utf-8")
-            response = requests.post(API_URL, headers=headers, data=img_data)   
+            
+              
         else:
             print("Ошибка скачивания фото")   
     if encoded_image:
@@ -65,16 +65,16 @@ def generate_image(prompt, image_url=None):
         
     else:
         payload = {"inputs": prompt}    
-    
 
-        # Обычная генерация по тексту
-        response = requests.post(API_URL, headers=headers, json={"inputs": prompt})
+    response = requests.post(API_URL, headers=headers, json=payload)
     if response.status_code == 200:
-        return response.content  # Возвращаем байты картинки
+        return response.content
     else:
         print(f"Ошибка API: {response.status_code}")
         return None
+    
 
+             
 print("Бот запущен и слушает сообщения...")
 
 user_states = {}
