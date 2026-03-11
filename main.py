@@ -12,7 +12,7 @@ import requests
 import base64
 
 HF_TOKEN = os.getenv("HF_TOKEN")
-API_URL = "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-schnell"
+API_URL = "https://router.huggingface.co/fal-ai/fal-ai/qwen-image-edit-2511/lora?_subdomain=queue"
 # Настройки доступа
 TOKEN = os.getenv("VK_TOKEN")
 GROUP_ID = os.getenv("GROUP_ID")
@@ -59,13 +59,10 @@ def generate_image(prompt, image_url=None):
             print("Ошибка скачивания фото")   
     if encoded_image:
         payload = {
-            "inputs": prompt,
-            "image": encoded_image,
-            "parameters": {
-                "strength": 0.2  # 0.1 — почти не меняет фото, 0.9 — меняет очень сильно
-                }
-            }
-        
+            "image_url": f"data:image/jpeg;base64,{encoded_image}",
+            "prompt": prompt,
+            "edit_instruction": prompt # В некоторых версиях Qwen используется этот ключ
+        }        
     else:
         payload = {"inputs": prompt}   
 

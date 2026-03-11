@@ -12,8 +12,10 @@ def generate_image(prompt_ru, image_bytes, hf_token):
     # 1. Перевод
     english_prompt = translate_prompt(prompt_ru)
             
-    API_URL = "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-schnell"
-    headers = {"Authorization": f"Bearer {os.getenv('HF_TOKEN')}"}
+    API_URL = "https://router.huggingface.co/fal-ai/fal-ai/qwen-image-edit-2511/lora?_subdomain=queue"
+    headers = {
+    "Authorization": f"Bearer {os.environ['HF_TOKEN']}",
+}
 
     if image_bytes is not None:
         base64_image = base64.b64encode(image_bytes).decode('utf-8')
