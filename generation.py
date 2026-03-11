@@ -12,7 +12,7 @@ def generate_image(prompt_ru, image_bytes, hf_token):
     # 1. Перевод
     english_prompt = translate_prompt(prompt_ru)
             
-    API_URL = "https://router.huggingface.co/fal-ai/fal-ai/qwen-image-edit-2511/lora?_subdomain=queue"
+    API_URL = "https://router.huggingface.co/fal-ai/fal-ai/qwen-image-edit-2511/lora"
     headers = {
     "Authorization": f"Bearer {os.environ['HF_TOKEN']}",
 }
@@ -44,4 +44,5 @@ def generate_image(prompt_ru, image_bytes, hf_token):
     else:
         print(f"Ошибка Hugging Face: {response.status_code}")
         print(f"Ответ сервера: {response.text}")
+
         return None
